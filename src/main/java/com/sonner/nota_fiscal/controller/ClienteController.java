@@ -1,12 +1,11 @@
 package com.sonner.nota_fiscal.controller;
 
-import com.sonner.nota_fiscal.domain.Cliente;
-import com.sonner.nota_fiscal.domain.DadosAtualizaCliente;
-import com.sonner.nota_fiscal.domain.DadosCliente;
+import com.sonner.nota_fiscal.model.Cliente;
 import com.sonner.nota_fiscal.repository.ClienteRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +23,9 @@ public class ClienteController {
     // ResponseEntity e a classe responsavel por controlar a resposta da requisicao http
     // RequestBody e a anotacao responsavel por converter o JSON em Java
     // Valid e a anotacao para fazer a validacao de um objeto
-    // DadosCliente e a classe que ira receber os dados em Json e converter para Java
-    public ResponseEntity cadastrar(@RequestBody @Valid DadosCliente dadosCliente){
-        var cliente = new Cliente(dadosCliente); // cria um novo cliente passando as informacoes de DadosCliente no construtor
+    // Cliente e a classe que ira receber os dados em Json e converter para Java
+    public ResponseEntity cadastrar(@RequestBody @Valid Cliente cliente){
+        new Cliente(cliente); // cria um novo cliente passando as informacoes de cliente no construtor
         clienteRepository.save(cliente); // salva as informacoes de cliente no banco de dados
         return ResponseEntity.ok("Cliente cadastrado com sucesso"); // retorna a resposta a requisicao http
     }
@@ -49,19 +48,16 @@ public class ClienteController {
         return ResponseEntity.ok("Cliente deletado com sucesso"); // retorna a resposta a requisicao http
     }
 
-    @PutMapping // anotacao utilizada para atualizacao de informacao ja existente no banco de dados
+    @PutMapping // significa que a atualizacao ira ocorrer de acordo com o id do registro encaminhado na requisicao http
     @Transactional // anotacao para indicar o commit caso sucesso ou rollback caso nao
     // ResponseEntity e a classe responsavel por controlar a resposta da requisicao http
     // <String> significa que ira retornar uma string no corpo na resposta
     // RequestBody e a anotacao responsavel por converter o JSON em Java
     // Valid e a anotacao para fazer a validacao de um objeto
     // DadosAtualizaCliente e a classe que ira receber os dados em Json e converter para Java
-    public ResponseEntity<String> atualizar(@RequestBody @Valid DadosAtualizaCliente dadosAtualizaCliente){
-        var cliente = clienteRepository.getReferenceById(dadosAtualizaCliente.id()); // busca a referencia passada no parametro dadosAtualizaCliente.id e atribui a classe Cliente
-        cliente.atualizarCliente(dadosAtualizaCliente); // recebe as informacoes a serem atualizadas atraves do metodo atualizarCliente da classe Cliente
-        return ResponseEntity.ok("Cliente atualizado com sucesso"); // retorna a resposta a requisicao http
+    public ResponseEntity<String> atualizar(@RequestBody @Valid Cliente clienteatualiza){
+         var cliente = clienteRepository.getReferenceById(clienteatualiza.getId()); // busca a referencia passada no parametro dadosAtualizaCliente.id e atribui a classe Cliente
+         cliente.atualizarCliente(clienteatualiza); // recebe as informacoes a serem atualizadas atraves do metodo atualizarCliente da classe Cliente
+         return ResponseEntity.ok("Cliente atualizado com sucesso"); // retorna a resposta a requisicao http
     }
-
-
-
 }
