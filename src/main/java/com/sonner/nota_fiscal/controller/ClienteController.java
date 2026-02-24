@@ -5,7 +5,6 @@ import com.sonner.nota_fiscal.repository.ClienteRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,9 +54,9 @@ public class ClienteController {
     // RequestBody e a anotacao responsavel por converter o JSON em Java
     // Valid e a anotacao para fazer a validacao de um objeto
     // DadosAtualizaCliente e a classe que ira receber os dados em Json e converter para Java
-    public ResponseEntity<String> atualizar(@RequestBody @Valid Cliente clienteatualiza){
-         var cliente = clienteRepository.getReferenceById(clienteatualiza.getId()); // busca a referencia passada no parametro dadosAtualizaCliente.id e atribui a classe Cliente
-         cliente.atualizarCliente(clienteatualiza); // recebe as informacoes a serem atualizadas atraves do metodo atualizarCliente da classe Cliente
+    public ResponseEntity<String> atualizar(@RequestBody @Valid Cliente clienteAtualiza){
+         var cliente = clienteRepository.getReferenceById(clienteAtualiza.getId()); // busca a referencia passada no parametro dadosAtualizaCliente.id e atribui a classe Cliente
+         cliente.atualizarCliente(clienteAtualiza); // recebe as informacoes a serem atualizadas atraves do metodo atualizarCliente da classe Cliente
          return ResponseEntity.ok("Cliente atualizado com sucesso"); // retorna a resposta a requisicao http
     }
 }
