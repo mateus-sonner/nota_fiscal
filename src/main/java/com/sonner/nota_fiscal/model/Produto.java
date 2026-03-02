@@ -4,14 +4,14 @@ import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Table(name = "produtos")
+import java.math.BigDecimal;
+
+@Table(name = "produto")
 @Entity(name = "Produto")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -25,18 +25,5 @@ public class Produto {
     private String descricao;
 
     @NotNull
-    private double valor_unitario;
-
-    public Produto(@Valid Produto produto) {
-        this.descricao = produto.descricao;
-        this.valor_unitario = produto.valor_unitario;
-    }
-
-    public void atualizarProduto(@Valid Produto produtoAtualiza) {
-        if (produtoAtualiza.descricao != null){
-            this.descricao = produtoAtualiza.descricao;
-        }if (produtoAtualiza.valor_unitario > 0){
-            this.valor_unitario = produtoAtualiza.valor_unitario;
-        }
-    }
+    private BigDecimal valorUnitario;
 }
