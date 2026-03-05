@@ -1,5 +1,6 @@
 package com.sonner.nota_fiscal.service;
 
+import com.sonner.nota_fiscal.model.ItemNota;
 import com.sonner.nota_fiscal.model.Nota;
 import com.sonner.nota_fiscal.model.Produto;
 import com.sonner.nota_fiscal.repository.NotaRepository;
@@ -46,15 +47,28 @@ public class NotaService {
         return notaRepository.findAll();
     }
 
+    public Nota lerId(Long id) {
+        return notaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Nota não encontrada"));
+    }
+
     public void deletarNota(Long id){
         notaRepository.deleteById(id);
     }
 
     public void atualizarNota(Long id, Nota notaAtualiza){
         Nota nota = notaRepository.findById(id).orElseThrow(() -> new RuntimeException("Nota não encontrada"));
-        nota.setNumero(notaAtualiza.getNumero());
         nota.setData(notaAtualiza.getData());
+
+        nota.getItemNotaList().clear();
+        for (ItemNota item : notaAtualiza.getItemNotaList()) {
+            item.setNota(nota);
+            nota.getItemNotaList().add(item);
+        }
+        totalizaNota(notaAtualiza);
+
+        nota.setValorTotalNota(notaAtualiza.getValorTotalNota());
+
+        notaRepository.save(nota);
     }
-
-
 }

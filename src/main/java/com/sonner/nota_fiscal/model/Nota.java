@@ -1,8 +1,5 @@
 package com.sonner.nota_fiscal.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,12 +8,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-@JsonPropertyOrder({
-        "cliente",
-        "numero",
-        "data",
-        "itemNotaList",
-        "valorTotalNota"})
 @Table(name = "nota")
 @Entity(name = "Nota")
 @Getter
@@ -28,7 +19,6 @@ public class Nota {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private Long id;
 
     @NotBlank
@@ -43,12 +33,6 @@ public class Nota {
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
-
-    // quando converter para JSON cliente sera o nome do metodo
-    @JsonProperty("cliente")
-    public String getClienteNome() {
-        return cliente.getNome(); // retorna apenas o nome do cliente
-    }
 
     // relacionamento de uma nota para uma lista de varios itens
     @OneToMany(mappedBy = "nota", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -21,6 +21,11 @@ public class ClienteService {
         return clienteRepository.findAll(); // retorna todos os registros de clientes no banco de dados para a lista
     }
 
+    public Cliente lerId(Long id) {
+        return clienteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+    }
+
     public void deletarCliente(Long id){ // recebe o id do cliente a ser deletado no banco de dados
         clienteRepository.deleteById(id); // deleta o cliente do banco de dados de acordo com o id
     }
@@ -31,4 +36,6 @@ public class ClienteService {
         cliente.setCodigo(clienteAtualiza.getCodigo()); // atualiza o codigo do cliente de acordo com o passado na requisicao http via json
 
     }
+
+
 }

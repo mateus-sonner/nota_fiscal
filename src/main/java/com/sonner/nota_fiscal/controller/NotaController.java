@@ -30,6 +30,12 @@ public class NotaController {
         return ResponseEntity.ok(notas);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Nota> lerId(@PathVariable Long id){
+        Nota nota = this.notaService.lerId(id);
+        return ResponseEntity.ok(nota);
+    }
+
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<String> deletar(@PathVariable Long id){

@@ -20,6 +20,11 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
+    public Produto lerId(Long id) {
+        return produtoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+    }
+
     public void deletarProduto(Long id){
         produtoRepository.deleteById(id);
     }
@@ -29,4 +34,5 @@ public class ProdutoService {
         produto.setDescricao(produtoAtualiza.getDescricao());
         produto.setValorUnitario(produtoAtualiza.getValorUnitario());
     }
+
 }

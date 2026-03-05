@@ -35,6 +35,14 @@ public class ClienteController {
         return ResponseEntity.ok(clientes); // retorna a resposta http com os clientes no formato Json
     }
 
+    @GetMapping("/{id}") // anotacao para indicar a qual protocolo http este metodo ira responder
+    // ResponseEntity e a classe responsavel por controlar a resposta da requisicao http
+    // <List<Cliente>> representacao de uma lista de objetos do tipo Cliente
+    public ResponseEntity<Cliente> lerId(@PathVariable Long id){
+        Cliente cliente = this.clienteService.lerId(id); // chamada do metodo para leitura dos clientes no banco de dados e retorno para a lista de clientes
+        return ResponseEntity.ok(cliente); // retorna a resposta http com os clientes no formato Json
+    }
+
     @DeleteMapping("/{id}") // significa que a exclusao ira ocorrer de acordo com o id do registro encaminhado na requisicao http
     @Transactional // anotacao para indicar o commit caso sucesso ou rollback caso nao
     // ResponseEntity e a classe responsavel por controlar a resposta da requisicao http
