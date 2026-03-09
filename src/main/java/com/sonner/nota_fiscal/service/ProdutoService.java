@@ -33,6 +33,7 @@ public class ProdutoService {
         Produto produto = produtoRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
         produto.setDescricao(produtoAtualiza.getDescricao());
         produto.setValorUnitario(produtoAtualiza.getValorUnitario());
+        produto.setCodigo(produtoAtualiza.getCodigo());
     }
 
 }

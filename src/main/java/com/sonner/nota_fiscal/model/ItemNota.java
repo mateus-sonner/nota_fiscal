@@ -21,7 +21,6 @@ public class ItemNota {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private Long id;
 
     @NotNull
@@ -34,7 +33,6 @@ public class ItemNota {
     @ManyToOne
     // JoinColumn indica a classe dono do relacionamento e é quem vai gerar a chave estrangeira no banco de dados atraves da anotacao name = "nota_id"
     @JoinColumn(name = "nota_id")
-    @JsonIgnore
     private Nota nota;
 
     // relacionamento onde varias listas so podem conter o produto uma unica vez

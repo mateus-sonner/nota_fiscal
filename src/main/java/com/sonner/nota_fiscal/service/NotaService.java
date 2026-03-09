@@ -58,13 +58,8 @@ public class NotaService {
 
     public void atualizarNota(Long id, Nota notaAtualiza){
         Nota nota = notaRepository.findById(id).orElseThrow(() -> new RuntimeException("Nota não encontrada"));
-        nota.setData(notaAtualiza.getData());
 
-        nota.getItemNotaList().clear();
-        for (ItemNota item : notaAtualiza.getItemNotaList()) {
-            item.setNota(nota);
-            nota.getItemNotaList().add(item);
-        }
+        nota = notaAtualiza;
         totalizaNota(notaAtualiza);
 
         nota.setValorTotalNota(notaAtualiza.getValorTotalNota());
